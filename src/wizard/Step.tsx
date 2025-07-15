@@ -1,19 +1,19 @@
-import { useContext, useEffect, useRef, type PropsWithChildren } from "react";
+import { useContext, useEffect, useRef, type PropsWithChildren, type RefObject } from "react";
 import { WizardContext } from "./Wizard.context";
 
 export const Step = ({ children }: PropsWithChildren) => {
-    const contentRef = useRef<HTMLDivElement>(null);
+    const elementRef = useRef<HTMLDivElement>(null);
     const { register, deregister } = useContext(WizardContext);
 
     useEffect(() => {
-        contentRef.current && register(contentRef.current);
+        elementRef.current && register(elementRef as RefObject<HTMLElement>);
 
         return () => {
-            contentRef.current && deregister(contentRef.current);
+            elementRef.current && deregister(elementRef as RefObject<HTMLElement>);
         };
-    }, [contentRef.current])
+    }, [elementRef])
 
-    return <div ref={contentRef}>
+    return <div ref={elementRef}>
         {children}
     </div>
 }
