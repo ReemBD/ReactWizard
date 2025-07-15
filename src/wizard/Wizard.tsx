@@ -25,17 +25,10 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
         return (a.ref.current.compareDocumentPosition(b.ref.current) & Node.DOCUMENT_POSITION_PRECEDING) > 0 ? 1 : -1;
     }
 
-    /**
-     * Registers a step to the wizard context store.
-     * used in order to enable step inter-component communication and determine their order by document order.
-     */
     const register = (step: StepData) => {
         setUnorderedSteps(prev => new Set([...prev, step]));
     }
 
-    /**
-     * Deregisters a step to the wizard context store.
-     */
     const deregister = (value: StepData['value']) => {
         setUnorderedSteps(prev => new Set([...prev].filter(s => s.value !== value)));
     }
