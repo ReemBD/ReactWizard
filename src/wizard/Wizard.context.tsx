@@ -1,4 +1,5 @@
 import { createContext, useMemo, useState, type PropsWithChildren, type ReactNode, type Ref, type RefObject } from "react";
+import { NextButton, PrevButton, WizardActions } from "./WizardActions";
 
 interface StepData {
     value: string;
@@ -11,12 +12,17 @@ interface IWizardContext {
     setActiveStepIndex: React.Dispatch<React.SetStateAction<number>>;
     register: (step: StepData) => void;
     deregister: (stepValue: StepData['value']) => void;
+    onSubmit: (...args: any[]) => void;
     valid: boolean;
 }
 
 export const WizardContext = createContext({} as IWizardContext);
 
-export const Wizard = ({ children }: PropsWithChildren) => {
+interface WizardProps {
+    onSubmit: (event: SubmitEvent) => void;
+}
+
+export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) => {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
 
     const [_unorderedSteps, setUnorderedSteps] = useState(new Set<StepData>());
@@ -50,9 +56,16 @@ export const Wizard = ({ children }: PropsWithChildren) => {
             steps,
             register,
             deregister,
+            onSubmit,
             valid,
         }}
     >
-        {children}
+        <form className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
+            {children}
+            <WizardActions>
+                <PrevButton />
+                <NextButton />
+            </WizardActions>
+        </form>
     </WizardContext.Provider>
 }
