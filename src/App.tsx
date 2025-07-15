@@ -1,5 +1,3 @@
-import { Wizard } from './wizard'
-
 import './App.css'
 import { ProfileForm } from './components/ProfileForm'
 

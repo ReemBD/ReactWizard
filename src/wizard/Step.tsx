@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, type PropsWithChildren, type RefObject } from "react";
-import { WizardContext } from "./Wizard.context";
+import { WizardContext } from "./WizardContext";
 
 export interface StepProps {
     value: string;
@@ -10,7 +10,7 @@ export const Step = ({ children, value, valid }: PropsWithChildren<StepProps>) =
     const ref = useRef<HTMLDivElement>(null);
     const { register, deregister, steps, activeStepIndex } = useContext(WizardContext);
 
-    const stepIndex = useMemo(() => steps.findIndex(s => s.value === value), [steps]);
+    const stepIndex = useMemo(() => steps.findIndex(s => s.value === value), [steps, value]);
 
     const isActiveStep = stepIndex === activeStepIndex;
 

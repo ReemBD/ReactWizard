@@ -1,12 +1,11 @@
 import { useContext, type PropsWithChildren } from "react";
-import { WizardContext } from "./Wizard.context";
+import { WizardContext } from "./WizardContext";
 
 export const NextButton = ({ children }: PropsWithChildren) => {
     const { activeStepIndex, setActiveStepIndex, steps, valid, onSubmit } = useContext(WizardContext);
 
     const isLastStep = activeStepIndex >= steps.length - 1
 
-    console.log('isLastStep: ', isLastStep)
     return <button
         type="button"
         disabled={!valid}
