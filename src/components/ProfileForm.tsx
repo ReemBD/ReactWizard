@@ -1,10 +1,10 @@
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import type { RegisterOptions } from "react-hook-form"
 import { useForm } from "react-hook-form"
-import { Step, Wizard, WizardContext } from "../wizard"
-import { NextButton, PrevButton, WizardActions } from "../wizard/WizardActions";
+import { Step, Wizard } from "../wizard"
 import { ProfileFormHeader } from "./ProfileFormHeader";
 import { ProfileFormError } from "./ProfileFormError";
+import { SubmitSuccessful } from "./SubmitSuccessful";
 
 export interface ProfileForm {
     name: string;
@@ -41,7 +41,7 @@ export const ProfileForm = () => {
         trigger,
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitSuccessful },
     } = useForm<ProfileForm>({
         defaultValues: {
             name: '',
@@ -58,8 +58,10 @@ export const ProfileForm = () => {
     }, [trigger])
 
     const onSubmit = (data: ProfileForm) => {
-        console.log('Submitting form...')
+        console.debug('Sending very real data to backend...', data);
     };
+
+    if (isSubmitSuccessful) return <SubmitSuccessful />
 
     return <div className="flex flex-col items-center justify-center">
         <Wizard
