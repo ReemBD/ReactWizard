@@ -1,4 +1,4 @@
-import { useMemo, useState, type PropsWithChildren, type RefObject } from "react";
+import { useMemo, useState, type FormEvent, type PropsWithChildren, type RefObject } from "react";
 
 import { NextButton, PrevButton, WizardActions } from "./WizardActions";
 import { WizardContext } from "./WizardContext";
@@ -10,7 +10,7 @@ export interface StepData {
 }
 
 interface WizardProps {
-    onSubmit: (event: SubmitEvent) => void;
+    onSubmit: (...params: any[]) => void;
 }
 
 export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) => {
@@ -33,6 +33,11 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
         setUnorderedSteps(prev => new Set([...prev].filter(s => s.value !== value)));
     }
 
+    const _onSubmit = (ev: FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
+        onSubmit(ev);
+    }
+
     return <WizardContext.Provider
         value={{
             activeStepIndex,
@@ -44,7 +49,7 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
             valid,
         }}
     >
-        <form className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
+        <form onSubmit={_onSubmit} className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
             {children}
             <WizardActions>
                 <PrevButton />

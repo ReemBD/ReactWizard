@@ -8,7 +8,7 @@ export interface StepProps {
 }
 
 export const Step = ({ children, value, valid }: PropsWithChildren<StepProps>) => {
-    const ref = useRef<HTMLDivElement>(null);
+    const elementRef = useRef<HTMLDivElement>(null);
     const { register, deregister, steps, activeStepIndex } = useContext(WizardContext);
 
     const stepIndex = useMemo(() => steps.findIndex(s => s.value === value), [steps, value]);
@@ -16,12 +16,12 @@ export const Step = ({ children, value, valid }: PropsWithChildren<StepProps>) =
     const isActiveStep = stepIndex === activeStepIndex;
 
     useEffect(() => {
-        register({ valid, value, ref: ref as RefObject<HTMLElement> });
+        register({ valid, value, ref: elementRef as RefObject<HTMLElement> });
 
         return () => deregister(value);
-    }, [valid, value, ref])
+    }, [valid, value, elementRef])
 
-    return <div style={{ display: isActiveStep ? 'block' : 'none' }} ref={ref}>
+    return <div className={`${!isActiveStep && 'hidden'}`} ref={elementRef}>
         {children}
     </div>
 }

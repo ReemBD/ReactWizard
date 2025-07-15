@@ -8,9 +8,9 @@ export const NextButton = ({ children }: PropsWithChildren) => {
     const isLastStep = activeStepIndex >= steps.length - 1
 
     return <button
-        type="button"
+        type={isLastStep ? 'submit' : 'button'}
         disabled={!valid}
-        onClick={(ev) => isLastStep ? onSubmit(ev) : setActiveStepIndex(prev => prev + 1)}
+        onClick={(ev) => !isLastStep && setActiveStepIndex(prev => prev + 1)}
         className="px-4 py-2 rounded bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors cursor-pointer"
     >
         {children || (isLastStep ? 'Done' : 'Next')}

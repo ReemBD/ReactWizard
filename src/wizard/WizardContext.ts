@@ -15,7 +15,7 @@ interface IWizardContext {
      * Deregisters a step to the wizard context store.
      */
     deregister: (stepValue: StepData['value']) => void;
-    onSubmit: (event: SubmitEvent) => void;
+    onSubmit: (...params: any[]) => void;
     valid: boolean;
 }
 

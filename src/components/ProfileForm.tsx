@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import type { RegisterOptions } from "react-hook-form"
 import { useForm } from "react-hook-form"
 
-import { Step, Wizard } from "../wizard"
+import { Step, Wizard } from "../wizard/public"
 import { ProfileFormHeader } from "./ProfileFormHeader";
 import { ProfileFormError } from "./ProfileFormError";
 import { SubmitSuccessful } from "./SubmitSuccessful";
@@ -66,10 +66,8 @@ export const ProfileForm = () => {
 
     return <div className="flex flex-col items-center justify-center">
         <Wizard
-            onSubmit={ev => {
-                ev.preventDefault()
-                handleSubmit(onSubmit)();
-            }}>
+            onSubmit={handleSubmit(onSubmit)}
+        >
             <ProfileFormHeader />
             {/* TODO: Create Stepper component to exist seperately from ProfileFormHeader inside Wizard component */}
             <Step value="name" valid={!errors.name}>
@@ -115,5 +113,5 @@ export const ProfileForm = () => {
                 <ProfileFormError error={errors.country} />
             </Step>
         </Wizard>
-    </div>
+    </div >
 }
