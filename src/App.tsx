@@ -1,7 +1,8 @@
 import { useContext } from 'react'
+
+import { Wizard, WizardContext, Step } from './wizard'
+
 import './App.css'
-import { Step } from './wizard/Step'
-import { Wizard, WizardContext } from './wizard/Wizard.context'
 
 const NextButton = () => {
   const { activeStepIndex, setActiveStepIndex, steps } = useContext(WizardContext);
