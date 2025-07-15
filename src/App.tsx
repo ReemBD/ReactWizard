@@ -6,7 +6,7 @@ import { ProfileForm } from './components/ProfileForm'
 function App() {
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <ProfileForm />
     </div>
   )
