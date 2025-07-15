@@ -40,15 +40,13 @@ export const ProfileForm = () => {
         mode: 'all'
     });
 
-    const valid = !Object.keys(errors).length;
-
     const onSubmit = (data: ProfileForm) => {
         alert(JSON.stringify(data, null, 2));
     };
 
     return <Wizard>
         <form className="w-[400px]" onSubmit={handleSubmit(onSubmit)}>
-            <Step value="name" valid={!!errors.name}>
+            <Step value="name" valid={!errors.name}>
                 <label className="block mb-2 font-medium">Name</label>
                 <input
                     {...register("name", profileFormValidation.name)}
@@ -57,7 +55,7 @@ export const ProfileForm = () => {
                 />
                 {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
             </Step>
-            <Step value="age" valid={!!errors.age}>
+            <Step value="age" valid={!errors.age}>
                 <label className="block mb-2 font-medium">Age</label>
                 <input
                     type="number"
@@ -67,7 +65,7 @@ export const ProfileForm = () => {
                 />
                 {errors.age && <span className="text-red-500 text-sm">{errors.age.message}</span>}
             </Step>
-            <Step value="isSubscribed" valid={!!errors.isSubscribed}>
+            <Step value="isSubscribed" valid={!errors.isSubscribed}>
                 <label className="block mb-2 font-medium">
                     <input type="checkbox" {...register("isSubscribed", profileFormValidation.isSubscribed)}
                         className="mr-2 align-middle" />
