@@ -1,19 +1,23 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import type { RegisterOptions } from "react-hook-form"
 import { useForm } from "react-hook-form"
 import { Step, Wizard, WizardContext } from "../wizard"
 import { NextButton, PrevButton, WizardActions } from "../wizard/WizardActions";
+import { ProfileFormHeader } from "./ProfileFormHeader";
+import { ProfileFormError } from "./ProfileFormError";
 
-interface ProfileForm {
+export interface ProfileForm {
     name: string;
     age: number;
-    isSubscribed: boolean;
+    email: string;
+    country: string;
 }
 
 const profileFormValidation: {
     name: RegisterOptions<ProfileForm, 'name'>,
     age: RegisterOptions<ProfileForm, 'age'>,
-    isSubscribed: RegisterOptions<ProfileForm, 'isSubscribed'>,
+    email: RegisterOptions<ProfileForm, 'email'>,
+    country: RegisterOptions<ProfileForm, 'country'>,
 } = {
     name: {
         required: "Name is required",
@@ -23,11 +27,18 @@ const profileFormValidation: {
         required: "Age is required",
         min: { value: 18, message: "Minimum age is 18" },
     },
-    isSubscribed: {},
+    email: {
+        required: "Email is required",
+        pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+    },
+    country: {
+        required: "Country is required",
+    },
 };
 
 export const ProfileForm = () => {
     const {
+        trigger,
         register,
         handleSubmit,
         formState: { errors },
@@ -35,47 +46,71 @@ export const ProfileForm = () => {
         defaultValues: {
             name: '',
             age: 0,
-            isSubscribed: false,
+            email: '',
+            country: '',
         },
         mode: 'all'
     });
 
+    // Display required errors on form load
+    useEffect(() => {
+        trigger()
+    }, [trigger])
+
     const onSubmit = (data: ProfileForm) => {
-        alert(JSON.stringify(data, null, 2));
+        console.log('Submitting form...')
     };
 
-    return <Wizard>
-        <form className="w-[400px]" onSubmit={handleSubmit(onSubmit)}>
+    return <div className="flex flex-col items-center justify-center">
+        <Wizard
+            onSubmit={ev => {
+                ev.preventDefault()
+                handleSubmit(onSubmit)();
+            }}>
+            <ProfileFormHeader />
+            {/* TODO: Create Stepper component to exist seperately from ProfileFormHeader inside Wizard component */}
             <Step value="name" valid={!errors.name}>
-                <label className="block mb-2 font-medium">Name</label>
+                <label htmlFor="name" className="block font-semibold mb-4">Please enter your name</label>
                 <input
+                    id="name"
                     {...register("name", profileFormValidation.name)}
                     className="border rounded px-3 py-2 w-full mb-1"
                     placeholder="Enter your name"
                 />
-                {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+                <ProfileFormError error={errors.name} />
             </Step>
             <Step value="age" valid={!errors.age}>
-                <label className="block mb-2 font-medium">Age</label>
+                <label htmlFor="age" className="block font-semibold mb-4">Please enter your age</label>
                 <input
+                    id="age"
                     type="number"
                     {...register("age", profileFormValidation.age)}
                     className="border rounded px-3 py-2 w-full mb-1"
                     placeholder="Enter your age"
                 />
-                {errors.age && <span className="text-red-500 text-sm">{errors.age.message}</span>}
+                <ProfileFormError error={errors.age} />
             </Step>
-            <Step value="isSubscribed" valid={!errors.isSubscribed}>
-                <label className="block mb-2 font-medium">
-                    <input type="checkbox" {...register("isSubscribed", profileFormValidation.isSubscribed)}
-                        className="mr-2 align-middle" />
-                    Subscribe to newsletter
-                </label>
+            <Step value="email" valid={!errors.email}>
+                <label htmlFor="email" className="block font-semibold mb-4">Please enter your email</label>
+                <input
+                    id="email"
+                    type="email"
+                    {...register("email", profileFormValidation.email)}
+                    className="border rounded px-3 py-2 w-full mb-1"
+                    placeholder="Enter your email"
+                />
+                <ProfileFormError error={errors.email} />
             </Step>
-            <WizardActions>
-                <PrevButton />
-                <NextButton />
-            </WizardActions>
-        </form>
-    </Wizard>
+            <Step value="country" valid={!errors.country}>
+                <label htmlFor="country" className="block font-semibold mb-4">Please enter your country</label>
+                <input
+                    id="country"
+                    {...register("country", profileFormValidation.country)}
+                    className="border rounded px-3 py-2 w-full mb-1"
+                    placeholder="Enter your country"
+                />
+                <ProfileFormError error={errors.country} />
+            </Step>
+        </Wizard>
+    </div>
 }
