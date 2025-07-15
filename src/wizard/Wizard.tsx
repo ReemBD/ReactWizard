@@ -17,7 +17,7 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
     const [activeStepIndex, setActiveStepIndex] = useState(0);
 
     const [_unorderedSteps, setUnorderedSteps] = useState(new Set<StepData>());
-    const steps = useMemo(() => [..._unorderedSteps].sort(_sortSteps), [_unorderedSteps])
+    const steps = useMemo(() => [..._unorderedSteps].sort(_sortSteps), [_unorderedSteps]);
 
     const valid = steps[activeStepIndex]?.valid;
 

@@ -3,14 +3,14 @@ import { useContext, type PropsWithChildren } from "react";
 import { WizardContext } from "./WizardContext";
 
 export const NextButton = ({ children }: PropsWithChildren) => {
-    const { activeStepIndex, setActiveStepIndex, steps, valid, onSubmit } = useContext(WizardContext);
+    const { activeStepIndex, setActiveStepIndex, steps, valid } = useContext(WizardContext);
 
-    const isLastStep = activeStepIndex >= steps.length - 1
+    const isLastStep = activeStepIndex >= steps.length - 1;
 
     return <button
         type={isLastStep ? 'submit' : 'button'}
         disabled={!valid}
-        onClick={(ev) => !isLastStep && setActiveStepIndex(prev => prev + 1)}
+        onClick={() => !isLastStep && setActiveStepIndex(prev => prev + 1)}
         className="px-4 py-2 rounded bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors cursor-pointer"
     >
         {children || (isLastStep ? 'Done' : 'Next')}

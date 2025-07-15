@@ -56,11 +56,11 @@ export const ProfileForm = () => {
     // Display required errors on form load
     useEffect(() => {
         trigger()
-    }, [trigger])
+    }, [trigger]);
 
     const onSubmit = (data: ProfileForm) => {
         console.debug('Sending very real data to backend...', data);
-    };
+    }
 
     if (isSubmitSuccessful) return <SubmitSuccessful />
 
@@ -113,5 +113,5 @@ export const ProfileForm = () => {
                 <ProfileFormError error={errors.country} />
             </Step>
         </Wizard>
-    </div >
+    </div>
 }
