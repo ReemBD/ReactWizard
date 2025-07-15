@@ -1,19 +1,31 @@
-import { useContext, useEffect, useRef, type PropsWithChildren, type RefObject } from "react";
+import { forwardRef, useContext, useEffect, useMemo, useRef, type PropsWithChildren, type RefObject } from "react";
 import { WizardContext } from "./Wizard.context";
 
+const StepContent = forwardRef<HTMLDivElement, PropsWithChildren>(({ children }, ref) => {
+    useEffect(() => {
+        console.log('ref in StepContent useEffect:', ref);
+    }, [ref]);
+    return <div ref={ref}>{children}</div>;
+});
+
+
 export const Step = ({ children }: PropsWithChildren) => {
-    const elementRef = useRef<HTMLDivElement>(null);
-    const { register, deregister } = useContext(WizardContext);
+    const stepRef = useRef<HTMLDivElement>(null);
+    const { register, deregister, steps, activeStepIndex } = useContext(WizardContext);
+
+    const stepIndex = useMemo(() => steps.findIndex(s => s === stepRef), [steps]);
+
+    const isActiveStep = stepIndex === activeStepIndex;
 
     useEffect(() => {
-        elementRef.current && register(elementRef as RefObject<HTMLElement>);
+        register(stepRef as RefObject<HTMLElement>);
 
-        return () => {
-            elementRef.current && deregister(elementRef as RefObject<HTMLElement>);
-        };
-    }, [elementRef])
+        return () => void (deregister(stepRef as RefObject<HTMLElement>));
+    }, [])
 
-    return <div ref={elementRef}>
-        {children}
-    </div>
+    // Defer content unless currently active.
+
+    return <span ref={stepRef}>
+        {isActiveStep && children}
+    </span>
 }

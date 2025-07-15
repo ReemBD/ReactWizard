@@ -25,16 +25,14 @@ export const Wizard = ({ children }: PropsWithChildren) => {
      * used in order to enable step intercommunication and determine their order by document order.
      */
     const register = (step: RefObject<HTMLElement>) => {
-        _unorderedSteps.add(step);
-        setUnorderedSteps(_unorderedSteps);
+        setUnorderedSteps(prev => new Set([...prev, step]));
     }
 
     /**
      * Deregisters a step to the wizard context store.
      */
     const deregister = (step: RefObject<HTMLElement>) => {
-        _unorderedSteps.delete(step);
-        setUnorderedSteps(_unorderedSteps);
+        setUnorderedSteps(prev => new Set([...prev].filter(s => s !== step)));
     }
 
     return <WizardContext.Provider
