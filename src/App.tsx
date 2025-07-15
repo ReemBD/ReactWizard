@@ -7,9 +7,7 @@ function App() {
 
   return (
     <div>
-      <Wizard>
-        <ProfileForm />
-      </Wizard>
+      <ProfileForm />
     </div>
   )
 }
