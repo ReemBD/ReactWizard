@@ -1,6 +1,4 @@
-import { useContext, useState } from 'react'
-
-import { Wizard, WizardContext, Step } from './wizard'
+import { Wizard } from './wizard'
 
 import './App.css'
 import { ProfileWizardForm } from './components/ProfileForm'
