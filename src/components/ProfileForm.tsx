@@ -64,10 +64,6 @@ export const ProfileForm = () => {
         }
     });
 
-    const onSubmit = (data: ProfileForm) => {
-        alert(JSON.stringify(data, null, 2));
-    };
-
     return <Wizard>
         <form className="w-[400px]" onSubmit={handleSubmit(onSubmit)}>
             <Step>
