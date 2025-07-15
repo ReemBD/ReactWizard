@@ -1,14 +1,14 @@
 import { Wizard } from './wizard'
 
 import './App.css'
-import { ProfileWizardForm } from './components/ProfileForm'
+import { ProfileForm } from './components/ProfileForm'
 
 function App() {
 
   return (
     <div>
       <Wizard>
-        <ProfileWizardForm />
+        <ProfileForm />
       </Wizard>
     </div>
   )

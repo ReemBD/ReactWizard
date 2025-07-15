@@ -51,7 +51,7 @@ const PrevButton = () => {
     </button>
 }
 
-export const ProfileWizardForm = () => {
+export const ProfileForm = () => {
     const {
         register,
         handleSubmit,
