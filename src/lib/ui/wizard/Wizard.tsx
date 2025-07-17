@@ -1,11 +1,8 @@
 import { useMemo, useState, type FormEvent, type PropsWithChildren, type RefObject } from "react";
 
-import { NextButton, PrevButton, WizardActions } from "./WizardActions";
 import { WizardContext } from "./WizardContext";
 
 export interface StepData {
-    value: string;
-    valid: boolean;
     ref: RefObject<HTMLElement>;
 }
 
@@ -19,8 +16,6 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
     const [_unorderedSteps, setUnorderedSteps] = useState(new Set<StepData>());
     const steps = useMemo(() => [..._unorderedSteps].sort(_sortSteps), [_unorderedSteps]);
 
-    const valid = steps[activeStepIndex]?.valid;
-
     function _sortSteps(a: StepData, b: StepData) {
         return (a.ref.current.compareDocumentPosition(b.ref.current) & Node.DOCUMENT_POSITION_PRECEDING) > 0 ? 1 : -1;
     }
@@ -29,8 +24,8 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
         setUnorderedSteps(prev => new Set([...prev, step]));
     }
 
-    const deregister = (value: StepData['value']) => {
-        setUnorderedSteps(prev => new Set([...prev].filter(s => s.value !== value)));
+    const deregister = (step: StepData) => {
+        setUnorderedSteps(prev => new Set([...prev].filter(s => s.ref !== step.ref)));
     }
 
     const _onSubmit = (ev: FormEvent<HTMLFormElement>) => {
@@ -46,15 +41,10 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
             register,
             deregister,
             onSubmit,
-            valid,
         }}
     >
         <form onSubmit={_onSubmit} className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
             {children}
-            <WizardActions>
-                <PrevButton />
-                <NextButton />
-            </WizardActions>
         </form>
     </WizardContext.Provider>
 }

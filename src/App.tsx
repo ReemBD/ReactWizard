@@ -1,5 +1,3 @@
-import './App.css'
-
 import { ProfileForm } from './components/ProfileForm'
 
 function App() {

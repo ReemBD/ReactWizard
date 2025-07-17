@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import type { RegisterOptions } from "react-hook-form"
 import { useForm } from "react-hook-form"
 
-import { Step, Wizard } from "../wizard/public"
+import { Step, Wizard } from "../lib/ui/wizard/public"
 import { ProfileFormHeader } from "./ProfileFormHeader";
 import { ProfileFormError } from "./ProfileFormError";
 import { SubmitSuccessful } from "./SubmitSuccessful";

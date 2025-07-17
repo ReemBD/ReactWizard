@@ -14,9 +14,8 @@ interface IWizardContext {
     /**
      * Deregisters a step to the wizard context store.
      */
-    deregister: (stepValue: StepData['value']) => void;
+    deregister: (stepValue: StepData) => void;
     onSubmit: (...params: any[]) => void;
-    valid: boolean;
 }
 
 export const WizardContext = createContext({} as IWizardContext);
