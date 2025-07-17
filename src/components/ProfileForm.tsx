@@ -67,8 +67,8 @@ export const ProfileForm = () => {
     return <div className="flex flex-col items-center justify-center">
         <Wizard
             onSubmit={handleSubmit(onSubmit)}
+            header={<ProfileFormHeader/>}
         >
-            <ProfileFormHeader />
             {/* TODO: Create Stepper component to exist seperately from ProfileFormHeader inside Wizard component */}
             <Step value="name" valid={!errors.name}>
                 <label htmlFor="name" className="block font-semibold mb-4">Please enter your name</label>

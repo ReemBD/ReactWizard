@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent, type PropsWithChildren, type RefObject } from "react";
+import { useMemo, useState, type FormEvent, type PropsWithChildren, type ReactNode, type RefObject } from "react";
 
 import { WizardContext } from "./WizardContext";
 
@@ -7,10 +7,11 @@ export interface StepData {
 }
 
 interface WizardProps {
+    header?: ReactNode;
     onSubmit: (...params: any[]) => void;
 }
 
-export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) => {
+export const Wizard = ({ children, header, onSubmit }: PropsWithChildren<WizardProps>) => {
     const [activeStepIndex, setActiveStepIndex] = useState(0);
 
     const [_unorderedSteps, setUnorderedSteps] = useState(new Set<StepData>());
@@ -43,6 +44,7 @@ export const Wizard = ({ children, onSubmit }: PropsWithChildren<WizardProps>) =
             onSubmit,
         }}
     >
+        {header}
         <form onSubmit={_onSubmit} className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
             {children}
         </form>
