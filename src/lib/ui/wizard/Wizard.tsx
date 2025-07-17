@@ -44,9 +44,11 @@ export const Wizard = ({ children, header, onSubmit }: PropsWithChildren<WizardP
             onSubmit,
         }}
     >
-        {header}
-        <form onSubmit={_onSubmit} className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
-            {children}
-        </form>
+        <div className="min-w-[500px] bg-white rounded-xl shadow-lg p-8 border border-blue-100">
+            {header}
+            <form onSubmit={_onSubmit}>
+                {children}
+            </form>
+        </div>
     </WizardContext.Provider>
 }
